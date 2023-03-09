@@ -16,6 +16,8 @@ app.use(require('./config/checkToken'));
 //non-AJAX, API route
 app.use('/api/users', require('./routes/api/users'));
 
+app.use('/api/classes', require('./routes/api/classes'));
+
 app.get('/*', function(req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
   });
