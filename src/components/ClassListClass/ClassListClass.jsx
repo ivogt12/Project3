@@ -4,6 +4,7 @@ export default function ClassListClass({ classItem }) {
             <div>{classItem.name}</div>
             <div>{classItem.subject}</div>
             <div>{classItem.size}</div>
+            
         </div>
     );
 };

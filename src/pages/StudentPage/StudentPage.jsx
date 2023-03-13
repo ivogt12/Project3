@@ -1,12 +1,12 @@
 import NewStudentForm from "../../components/NewStudentForm/NewStudentForm";
+import StudentGradeList from "../../components/StudentGradeList/StudentGradeList";
 
-export default function StudentPage({classItems, setClassItems}) {
-    
-    
+export default function StudentPage({classItems, setClassItems, user}) {
     return (
         <>
-            <h1>StudentPage</h1>
-            < NewStudentForm classItem={classItems} setClassItems={setClassItems}/>
+            <NewStudentForm classItems={classItems} setClassItems={setClassItems} />
+            <StudentGradeList classItems={classItems}  user={user} />
         </>
+       
     );
 };

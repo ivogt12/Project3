@@ -1,10 +1,27 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+
 const classSchema = new Schema({
-    name: { type: String, required: true },
-    subject: { type: String, required: true },
-    size: { type: Number, required: true }
+    user: {type: Schema.Types.ObjectId, ref: 'User', },
+    name: { type: String},
+    subject: { type: String},
+    size: { type: Number},
+    students: [{type: Schema.Types.ObjectId, ref: 'Student'}],
+    
 });
 
-module.exports = mongoose.model('Class_', classSchema);
+classSchema.statics.checkUser = function(userId) {
+    return this.findOneAndUpdate(
+        {user: userId},
+        {user: userId},
+        {upsert: true, new: true}
+    )
+}
+
+
+classSchema.statics.sendStu = function (teacherId){
+    return this.find({teacher: teacherId})
+}
+
+module.exports = mongoose.model('Class', classSchema);

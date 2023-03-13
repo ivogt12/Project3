@@ -18,6 +18,8 @@ app.use('/api/users', require('./routes/api/users'));
 
 app.use('/api/classes', require('./routes/api/classes'));
 
+app.use('/api/students', require('./routes/api/students'));
+
 app.get('/*', function(req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
   });

@@ -3,6 +3,8 @@ import * as classAPI from '../../utilities/classes-api';
 
 export default function NewClassForm({setClassItems, classItems}) {
 
+
+
     const [newClass, addNewClass] = useState({
         name: '',
         subject: '',
@@ -58,6 +60,7 @@ export default function NewClassForm({setClassItems, classItems}) {
                     required
                 />
                 <button type="submit">Submit</button>
+
 
             </form>
             <p className="error-message">&nbsp;{error}</p>
