@@ -5,24 +5,28 @@ const studentSchema = new Schema({
     name: { type: String},
     classroom: {type: String},
     user: {type: Schema.Types.ObjectId, ref: 'User'},
+    grade: {type: String}
 });
 
-studentSchema.statics.checkUser = function(userId) {
-    return this.findOneAndUpdate(
+studentSchema.statics.getStudents = function(userId) {
+    return this.find(
         {user: userId},
-        {user: userId},
-        {upsert: true, new: true}
     )
 }
 
-studentSchema.statics.myStudents = async function(students) {
-    students.forEach((student) => {
-        
-    const stu = this.findById(student._id)
-    
-    const stuArr = []
-    return stu
-    })}
+studentSchema.statics.checkUser = function(student ) {
+    return this.findOneAndUpdate(
+        {_id: student},
+        {user: userId},
+        {upsert: true, new: false}
+    )
+}
 
+studentSchema.statics.addStudent = function(check, stuObj) {
+    return this.find(
+        {_id: check._id},
+        {name: stuObj.name}
+    )
+}
 
 module.exports = mongoose.model('Student', studentSchema);

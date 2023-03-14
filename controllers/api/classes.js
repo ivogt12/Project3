@@ -1,20 +1,23 @@
 const Class = require('../../models/class');
 const Student = require('../../models/student');
+const Assignment = require('../../models/assignment');
 
 module.exports = {
-    getMyStudents,
+    setId,
     index,
+    getStudents,
     create,
-    createstu
+    createstu,
+    createAss
 };
 
-async function getMyStudents(req, res) {
+async function setId(req, res) {
 
-    // const check = await Student.checkUser(req.user._id)
+    // console.log(req.params.newStu, req.user._id)
+
+    // const check = Student.checkUser(req.params.newStu, req.user._id)
     // console.log(check)
 
-    // const students = await Student.find({teacher: [req.user._id]})
-    // console.log(students)
 
     // const students = await Class.sendStu(req.user._id)
     
@@ -28,8 +31,9 @@ async function index(req, res) {
     res.json(classes)
 };
 
-async function loadUser(req, res) {
-    const check = await Class.checkUser()
+async function getStudents(req, res) {
+    const students = await Student.getStudents(req.params.userId)
+    res.json(students)
 }
 
 async function create(req, res) {
@@ -44,17 +48,32 @@ async function createstu(req, res) {
     let stuObj = req.body.newStudent
 
     const student = new Student(stuObj)
-    
-    const matchedClass = await Class.findOne({name: req.body.newStudent.classroom})
 
-    matchedClass.students.push(student)
-    // matchedClass.teacher.push(req.user._id)
-    matchedClass.save()
+    student.user = req.user._id
+
+    // const check = await Student.checkUser(student._id)
+//    const add = await Student.addStudent(check, stuObj)
+//    console.log(add)
+    
+    // const matchedClass = await Class.findOne({name: req.body.newStudent.classroom})
+    // console.log(matchedClass)
+    // matchedClass.students.push(student)
+    // // matchedClass.teacher.push(req.user._id)
+    // matchedClass.save()
     student.save()
-
-
-    
-
-    
-    res.json(matchedClass.students)
+    res.json(student)
 };
+
+async function createAss(req, res) {
+    const getClass = await Class.findById(req.params.classId)
+    // console.log(getClass)
+    const assignment = new Assignment(req.body.assignment)
+    // console.log(assignment)
+    assignment.teacher = req.user._id
+
+    getClass.assignments.push(assignment);
+    assignment.save()
+    getClass.save()
+    console.log(getClass)
+    res.json(assignment)
+}

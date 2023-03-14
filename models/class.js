@@ -8,10 +8,11 @@ const classSchema = new Schema({
     subject: { type: String},
     size: { type: Number},
     students: [{type: Schema.Types.ObjectId, ref: 'Student'}],
+    assignments: [{type: Schema.Types.ObjectId, ref:'Assignment'}]
     
 });
 
-classSchema.statics.checkUser = function(userId) {
+classSchema.statics.checkUser = function(studentId, userId) {
     return this.findOneAndUpdate(
         {user: userId},
         {user: userId},

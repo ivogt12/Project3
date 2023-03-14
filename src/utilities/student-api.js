@@ -1,10 +1,10 @@
 import sendRequest from './send-request';
 const BASE_URL = '/api/students';
 
-export async function getMyStudents() {
-    return sendRequest(BASE_URL)
+export async function addGrade(studentId, grade){
+    return sendRequest(`${BASE_URL}/${studentId}`, 'POST', {grade});
 };
 
-export async function createGrade(studentGrade) {
-    return sendRequest(`${BASE_URL}/create`, 'POST', {studentGrade});
+export async function getGrades(userId) {
+    return sendRequest(`${BASE_URL}/grades/${userId}`);
 };

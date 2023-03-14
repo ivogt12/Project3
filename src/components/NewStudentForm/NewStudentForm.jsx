@@ -1,15 +1,25 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import * as classesAPI from "../../utilities/classes-api"
+import StudentGradeList from "../../components/StudentGradeList/StudentGradeList";
 
-export default function NewStudentForm({classItems, setClassItems}) {
 
-    const [students, setStudents] = useState([''])
+export default function NewStudentForm({classItems, setClassItems, studentItems, user}) {
+    const [students, setStudents] = useState([])
+    
 
     const [newStudent, addNewStudent] = useState({
         name: "",
         classroom: "",
 
     });
+
+    // useEffect(function() {
+    //     async function setId() {
+    //         const students = await classesAPI.setId();
+    //         setStudents(students);
+    //     }
+    //     setId();
+    // }, [students]);
 
     const [error, setError] = useState("");
 
@@ -21,14 +31,14 @@ export default function NewStudentForm({classItems, setClassItems}) {
     async function handleSubmit(evt) {
         evt.preventDefault();
         try {
-            await classesAPI.addStu(newStudent);
-            // console.log(classItems)
-           
+            const newStu = await classesAPI.addStu(newStudent);
+            setStudents([...students, {newStu}])
+
         } catch {
             setError("Submition Failed - Please Try Again")
         }
     };
-
+    
 
     return (
         <>
@@ -59,6 +69,7 @@ export default function NewStudentForm({classItems, setClassItems}) {
                 </select>
                 <button type="submit">Submit</button>
             </form>
+            
             <p className="error-message">&nbsp;{error}</p>
         </>
     );

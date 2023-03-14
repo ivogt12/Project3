@@ -7,11 +7,14 @@ import AuthPage from '../AuthPage/AuthPage';
 import MyClassesPage from '../MyClassesPage/MyClassesPage';
 import NavBar from '../../components/NavBar/NavBar';
 import LoginForm from '../../components/LoginForm/LoginForm';
+import ClassDetails from '../../components/ClassDetails/ClassDetails';
 import './App.css';
 
 export default function App() {
   const [user, setUser] = useState(getUser());
   const [classItems, setClassItems] = useState([]);
+  const [studentItems, setStudentItems] = useState([])
+
   useEffect(function() {
     async function getClasses() {
         const class_ = await classesAPI.getAll();        
@@ -19,11 +22,11 @@ export default function App() {
     }
     getClasses();
 
-    // async function getCart() {
-    //   const cart = await ordersAPI.getCart();
-    //   setCart(cart);
-    // }
-    // getCart();
+    async function getStudents() {
+      const students = await classesAPI.getStudents(user._id);
+      setStudentItems(students);
+    }
+    getStudents();
 }, []);
 
   return (
@@ -33,8 +36,9 @@ export default function App() {
         <>
           <NavBar user={user} setUser={setUser} />
           <Routes>
-            <Route path="/student" element={<StudentPage classItems={classItems} setClassItems={setClassItems} user={user} />} />
+            <Route path="/student" element={<StudentPage classItems={classItems} setClassItems={setClassItems} studentItems={studentItems} user={user} />} />
             <Route path="/classes" element={<MyClassesPage classItems={classItems} setClassItems={setClassItems} />} />
+            <Route path="/classDetails" element={<ClassDetails />} />
             <Route path="/*" element={<Navigate to="classes" />} />
           </Routes>
         </>
