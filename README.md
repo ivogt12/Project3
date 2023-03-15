@@ -14,7 +14,7 @@ EduGrade is a MERN-Stack Application that allows teachers to create classes and 
 
 Trello Board: https://trello.com/b/6ahEYDmN/project-4-seir
 
-Deployed App:
+Deployed App: https://aqueous-depths-00953.herokuapp.com/
 
 ## Unsolved Problems:
 
