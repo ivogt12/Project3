@@ -8,7 +8,10 @@ module.exports = {
     getStudents,
     create,
     createstu,
-    createAss
+    createAss,
+    getAss,
+    deleteClass,
+    editClass
 };
 
 async function setId(req, res) {
@@ -38,42 +41,49 @@ async function getStudents(req, res) {
 
 async function create(req, res) {
     const newClass = new Class(req.body.newClass);
-    // const check = await Class.checkUser(req.user._id)
-    // console.log(check)
     await newClass.save()
     res.json(newClass);
 };
 
 async function createstu(req, res) {
     let stuObj = req.body.newStudent
-
     const student = new Student(stuObj)
 
-    student.user = req.user._id
+    const class_ = await Class.find({name: req.body.newStudent.classroom})
 
-    // const check = await Student.checkUser(student._id)
-//    const add = await Student.addStudent(check, stuObj)
-//    console.log(add)
-    
-    // const matchedClass = await Class.findOne({name: req.body.newStudent.classroom})
-    // console.log(matchedClass)
-    // matchedClass.students.push(student)
-    // // matchedClass.teacher.push(req.user._id)
-    // matchedClass.save()
-    student.save()
+    student.classroom = class_[0]._id
+    class_[0].students.push(student._id)
+    student.user = req.user._id
+    class_[0].save()
+    await student.save()
     res.json(student)
 };
 
 async function createAss(req, res) {
-    const getClass = await Class.findById(req.params.classId)
-    // console.log(getClass)
     const assignment = new Assignment(req.body.assignment)
-    // console.log(assignment)
     assignment.teacher = req.user._id
-
-    getClass.assignments.push(assignment);
+    assignment.class = req.params.classId;
     assignment.save()
+    res.json(assignment)
+};
+
+async function getAss(req, res) {
+    const whichClass = await Class.findById(req.params.classId)
+    const assignments = await Assignment.find({teacher: req.params.userId});
+    res.json(assignments)
+};
+
+async function deleteClass(req, res) {
+    await Class.deleteOne({_id: req.body.classId})
+
+}
+
+async function editClass(req, res) {
+    const getClass = await Class.findById(req.params.id)
+    getClass.name = req.body.newClass.name
+    getClass.subject = req.body.newClass.subject
+    getClass.size = req.body.newClass.size
     getClass.save()
     console.log(getClass)
-    res.json(assignment)
+    res.json(getClass)
 }

@@ -20,6 +20,8 @@ app.use('/api/classes', require('./routes/api/classes'));
 
 app.use('/api/students', require('./routes/api/students'));
 
+app.use('/api/assignments', require('./routes/api/assignments'));
+
 app.get('/*', function(req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
   });

@@ -69,7 +69,7 @@ export default function NewStudentForm({classItems, setClassItems, studentItems,
                 </select>
                 <button type="submit">Submit</button>
             </form>
-            
+                        
             <p className="error-message">&nbsp;{error}</p>
         </>
     );

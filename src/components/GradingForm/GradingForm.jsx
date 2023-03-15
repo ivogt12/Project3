@@ -14,7 +14,8 @@ export default function GradingForm({student, user}) {
     useEffect(function() {
         async function getGrades() {
             const g = await studentAPI.getGrades(student._id);
-            getQueryGrade([...queryGrade, `${g}`]);
+            console.log(g)
+            // getQueryGrade([...queryGrade, `${g}`]);
         }
         getGrades();
     }, []);
@@ -29,8 +30,8 @@ export default function GradingForm({student, user}) {
         evt.preventDefault();
         try {
             const g = await studentAPI.addGrade(student._id, dumbGrade)
-            setGrade([g])
-            // console.log(grade)
+            setGrade(g)
+            
         } catch {
             setError("Submit Fail")
         }
@@ -38,7 +39,9 @@ export default function GradingForm({student, user}) {
 
     return(
         <>
-            {queryGrade.length ? <div>{queryGrade[0]}</div>: <div>{grade}</div>}
+            {/* {console.log(grade)} */}
+            {queryGrade.length ? <div>{queryGrade[0]}</div>: <div>{grade.grade}</div>}
+            
             <form onSubmit={handleSubmit}>
                 <label>Grade:</label>
                 <label>Input Grade</label>

@@ -1,7 +1,9 @@
 import {useEffect, useState} from "react";
 import * as classesAPI from "../../utilities/classes-api";
+import AssignmentList from "../../components/AssignmentList/AssignmentList";
 
-export default function NewAssignmentForm({classItem}) {
+export default function NewAssignmentForm({classItem, user}) {
+
 
     const [assignment, setAssignment] = useState([])
 
@@ -21,7 +23,6 @@ export default function NewAssignmentForm({classItem}) {
         evt.preventDefault();
         try {
             const newAssignment = await classesAPI.newAss(classItem._id, assignments);
-            console.log(newAssignment);
             setAssignment([{newAssignment}])
         } catch {
             setError("Failed");
@@ -49,7 +50,7 @@ export default function NewAssignmentForm({classItem}) {
             />
             <button type="Submit">Upload Assignment</button>
         </form>
-        <div>{assignment.name}</div>
+        {assignment.length ?<AssignmentList key={classItem._id} user={user} classItem={classItem} assignment={assignment[0].newAssignment} />: <AssignmentList key={classItem._id} user={user} classItem={classItem} />}  
         </>
     )
 

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 
+
 const classSchema = new Schema({
     user: {type: Schema.Types.ObjectId, ref: 'User', },
     name: { type: String},
@@ -12,17 +13,9 @@ const classSchema = new Schema({
     
 });
 
-classSchema.statics.checkUser = function(studentId, userId) {
-    return this.findOneAndUpdate(
-        {user: userId},
-        {user: userId},
-        {upsert: true, new: true}
-    )
+classSchema.statics.getStudents = function() {
+    return
 }
 
-
-classSchema.statics.sendStu = function (teacherId){
-    return this.find({teacher: teacherId})
-}
 
 module.exports = mongoose.model('Class', classSchema);

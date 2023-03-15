@@ -4,6 +4,7 @@ export default class SignUpForm extends Component {
     state = {
         name: '',
         email: '',
+        role: '',
         password: '',
         confirm: '',
         error: ''
@@ -22,6 +23,7 @@ export default class SignUpForm extends Component {
           const formData = {
             name: this.state.name,
             email: this.state.email,
+            role: this.state.role,
             password: this.state.password
           }
           const user = await signUp(formData);
@@ -41,6 +43,14 @@ export default class SignUpForm extends Component {
                 <input type="text" name="name" value={this.state.name} onChange={this.handleChange} required />
                 <label>Email</label>
                 <input type="email" name="email" value={this.state.email} onChange={this.handleChange} required />
+                <label>Who are You</label>
+                <select 
+                  name="role"
+                  value={this.state.role} onChange={this.handleChange}
+                >
+                  <option>Student</option>
+                  <option>Teacher</option>
+                </select>
                 <label>Password</label>
                 <input type="password" name="password" value={this.state.password} onChange={this.handleChange} required />
                 <label>Confirm</label>

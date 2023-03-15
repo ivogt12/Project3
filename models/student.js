@@ -1,11 +1,19 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const gradeSchema = new Schema({
+    grade: {type: String},
+    assignment:{type:Schema.Types.ObjectId, ref: 'Assignment'}
+})
+
 const studentSchema = new Schema({
     name: { type: String},
-    classroom: {type: String},
+    classroom: {type: Schema.Types.ObjectId, ref: 'Class'},
+    // classroom: {type: String},
     user: {type: Schema.Types.ObjectId, ref: 'User'},
-    grade: {type: String}
+    grade: {type: String},
+    assignments:[{type: Schema.Types.ObjectId, ref: 'Assignment'}],
+    assignmentGrades: [gradeSchema]
 });
 
 studentSchema.statics.getStudents = function(userId) {

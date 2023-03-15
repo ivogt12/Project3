@@ -9,6 +9,9 @@ import NavBar from '../../components/NavBar/NavBar';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import ClassDetails from '../../components/ClassDetails/ClassDetails';
 import './App.css';
+import AssignmentGradeForm from '../../components/AssignmentGradeForm/AssignmentGradeForm';
+import EditClassForm from '../../components/EditClassForm/EditClassForm';
+// import DeleteClassPage from '../DeleteClassPage/DeleteClassPage';
 
 export default function App() {
   const [user, setUser] = useState(getUser());
@@ -31,6 +34,10 @@ export default function App() {
 
   return (
     <main className="App">
+    {console.log(user)}
+
+    {/* {user.role === 'Student'? <Route path="/classes" element={<MyClassesPage classItems={classItems} setClassItems={setClassItems} />} />: null} */}
+
       {
         user ? 
         <>
@@ -38,7 +45,11 @@ export default function App() {
           <Routes>
             <Route path="/student" element={<StudentPage classItems={classItems} setClassItems={setClassItems} studentItems={studentItems} user={user} />} />
             <Route path="/classes" element={<MyClassesPage classItems={classItems} setClassItems={setClassItems} />} />
-            <Route path="/classDetails" element={<ClassDetails />} />
+            <Route path="/classDetails" element={<ClassDetails user={user} />} />
+            <Route path="/assignmentGrades" element={<AssignmentGradeForm user={user} />} />
+            <Route path="/editClass" element={<EditClassForm user={user}/>} />
+            {/* <Route path="/deleteClass" element={<DeleteClassPage user={user} />} /> */}
+
             <Route path="/*" element={<Navigate to="classes" />} />
           </Routes>
         </>

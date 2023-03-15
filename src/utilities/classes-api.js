@@ -25,4 +25,16 @@ export async function newAss(classId, assignment) {
     return sendRequest(`${BASE_URL}/createAss/${classId}`, 'POST', {assignment})
 }
 
+export async function getAss(userId, classId) {
+    return sendRequest(`${BASE_URL}/assignments/${userId}/${classId}`)
+};
+
+export async function deleteClass(classId) {
+    return sendRequest(`${BASE_URL}`, 'POST', {classId})
+}
+
+export async function edit(classId, newClass) {
+    return sendRequest(`${BASE_URL}/edit/edit/${classId}`, 'POST', {newClass})
+}
+
 

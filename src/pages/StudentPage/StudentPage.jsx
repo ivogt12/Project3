@@ -5,7 +5,7 @@ export default function StudentPage({classItems, setClassItems, studentItems, us
     return (
         <>
             <NewStudentForm classItems={classItems} setClassItems={setClassItems} studentItems={studentItems} user={user} />
-            <StudentGradeList  user={user} />
+            <StudentGradeList user={user} />
         </>
        
     );
